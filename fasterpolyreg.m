@@ -9,13 +9,15 @@ inner = @(a,b) dot(a,b);
 for i=1:n+1
     %this inner loop doesn't need to go all the way to n since we have
     %symmetry in this matrix. Fix later.
-    for j=1:n+1
+    for j=i:n+1
       Ax(i,j) = inner(x.^(i-1),x.^(j-1));
+      Ax(j,i) = Ax(i,j);
     end
 end
 for i=1:n+1
    Ay(i,1) = inner(x.^(i-1),y);
 end
+%TODO: might be slightly faster if we just solve Ax/Ay? Test laster.
 A = [Ax Ay];
 A = rref(A);
 
