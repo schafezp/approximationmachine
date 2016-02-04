@@ -17,9 +17,10 @@ Eval_U=Eval_U([n:-1:1],[n:-1:1])    %Keep consistant with above swap
 AtA=transpose(A)*A
 [Evec_V,Eval_V]=eig(AtA)    %Get eigenvectors and values
 n=length(Evec_V)
-Vt=Evec_V(:,n:-1:1) %Reorder column do be in decending order, based on eigenvalue
+V=Evec_V(:,n:-1:1) %Reorder column do be in decending order, based on eigenvalue
 Eval_V=Eval_V([n:-1:1],[n:-1:1]) %Keep consistant with above swap
 w=sqrt(dot(Evec_V(:,1),Evec_V(:,1)))
+Vt=transpose(V)
 
 Eval_V = nonzeros(diag(Eval_V))
 m=length(Eval_V)
