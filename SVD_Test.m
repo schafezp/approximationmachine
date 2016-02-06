@@ -1,5 +1,5 @@
-function [ U,Vt,S ] = SVD_Test( A )
-%Preform SVD on Matrix A
+function [ U,S,Vt ] = SVD_Test( A )
+%Preform SVD on Matrix AV
 %Find U - A*At -> Eigenvalues and eigen Vectors -> Place in a matrix and
 %orthonormalize using Grahm-Schmitt
 syms lam    % Will be used for finding eigenvectors
@@ -19,8 +19,7 @@ AtA=transpose(A)*A
 n=length(Evec_V)
 V=Evec_V(:,n:-1:1) %Reorder column do be in decending order, based on eigenvalue
 Eval_V=Eval_V([n:-1:1],[n:-1:1]) %Keep consistant with above swap
-w=sqrt(dot(Evec_V(:,1),Evec_V(:,1)))
-Vt=transpose(V)
+%Vt=transpose(V)
 
 Eval_V = nonzeros(diag(Eval_V))
 m=length(Eval_V)
@@ -29,8 +28,9 @@ N=0
 for N= [1:m]
     S(N,N)=sqrt(Eval_V(N,1))
 end
-S
-Vt
-U
+%S
+Vt=V'
+% s=V(n+1,n+1)
+% -V(n:1, n+1)/s
 end
 
