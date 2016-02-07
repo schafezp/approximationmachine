@@ -1,4 +1,4 @@
-function [ U,S,Vt ] = SVD_Test( A )
+function [ U,S,V] = SVD_Test( A )
 %Preform SVD on Matrix AV
 %Find U - A*At -> Eigenvalues and eigen Vectors -> Place in a matrix and
 %orthonormalize using Grahm-Schmitt
@@ -29,7 +29,7 @@ for N= [1:m]
     S(N,N)=sqrt(Eval_V(N,1))
 end
 %S
-Vt=V'
+V
 % s=V(n+1,n+1)
 % -V(n:1, n+1)/s
 end
