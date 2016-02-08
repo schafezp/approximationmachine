@@ -1,4 +1,4 @@
-function [p,coeff] = normalpolyreg(x,y,n)
+function [p,coeff] = fasterpolyreg(x,y,n)
 % this method should return a polynomial function p which is the best least squares fit to the data [x,y] 
 %using the basis functions of 1,x,...,x^n
 % Reshape our data so that our function works whether we get column or row vectors
@@ -7,8 +7,6 @@ y = reshape(y,[],1);
 inner = @(a,b) dot(a,b);
 % loop over rows to i
 for i=1:n+1
-    %this inner loop doesn't need to go all the way to n since we have
-    %symmetry in this matrix. Fix later.
     for j=i:n+1
       Ax(i,j) = inner(x.^(i-1),x.^(j-1));
       Ax(j,i) = Ax(i,j);
