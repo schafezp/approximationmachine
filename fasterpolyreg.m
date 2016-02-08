@@ -16,10 +16,9 @@ for i=1:n+1
    Ay(i,1) = inner(x.^(i-1),y);
 end
 %TODO: might be slightly faster if we just solve Ax/Ay? Test laster.
-A = [Ax Ay];
-A = rref(A);
-
-coeff = A(:,n+2);
+%A = [Ax Ay];
+%A = rref(A);
+coeff = Ax\Ay
 %now that we have all the coefficients we must reorder them.
 coeff = coeff(n+1:-1:1);
 p = @(x) polyval(coeff,x);
