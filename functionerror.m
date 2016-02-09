@@ -4,5 +4,5 @@ y = reshape(y,[],1);
 f = reshape(f,[],1);
 
 
-[r2, rmse] = rsquare(y,f)
+[r2, rmse] = rsquare(y,f);
 end
