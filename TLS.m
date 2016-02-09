@@ -1,23 +1,37 @@
-xi=[1 2 4 5 6 7 9]'
-eta=[4 1 5 6 5 7 9]'
-xx=-1:11;
-A=[ones(size(xi)) xi eta]
-[m n]=size(xi)
-m=max(siqze(A))
-sqm=sqrt(m)
-u=ones(size(xi))
-u(1)=u(1)+sqm
-u=u/sqrt(sqm*(1+sqm))
-QA=A-u*u'*A
-AA=QA(2:m,2)
-[U,S,Vt]=SVD_Test([AA,QA(2:m,3)])
-s=Vt(n+1,n+1)
-if s==0
+function [ Coe ] = TLS_Test( A,B )
+%Inputs: 
+%A = Row Vector of Independant Variables
+%B = Row Vector of Dependant Variables
+% Outputs:
+%Coe = Row Vector [a b] Where a+b*x is the TLS Linear Approximation
+
+%Matricies need to be column vectors
+%A=A';                                   
+%B=B';
+A = reshape(A,[],1);
+B = reshape(B,[],1);
+% xx will be used later to plot result
+xx=min(A)-2:max(A)+2;   
+M=[ones(size(A)) A B];
+[m n]=size(A);
+m=max(size(M));
+sqm=sqrt(m);
+u=ones(size(A));
+u(1)=u(1)+sqm;
+u=u/sqrt(sqm*(1+sqm));
+QM=M-u*u'*M;
+MM=QM(2:m,2);
+[U,S,Vt]=SVD_Test([MM,QM(2:m,3)]);
+s=Vt(n+1,n+1);
+if s==0;
     error('TLS Solution DNE')
 end
-a=-Vt(1:n,n+1)/s
-b=-(QA(1,2)*a-QA(1,3))/QA(1,1)
+b=-Vt(1:n,n+1)/s;
+a=-(QM(1,2)*b-QM(1,3))/QM(1,1);
 hold on
-plot(xi,eta,'x')
+plot(A,B,'x')
 plot(xx,a*xx+b)
 hold off
+Coe=[a,b];
+end
+
