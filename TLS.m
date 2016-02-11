@@ -29,10 +29,10 @@ if s==0;
 end
 b=-Vt(1:n,n+1)/s;
 a=-(QM(1,2)*b-QM(1,3))/QM(1,1);
-hold on
-plot(A,B,'x')
-plot(xx,a*xx+b)
-hold off
+% $$$ hold on
+% $$$ plot(A,B,'x')
+% $$$ plot(xx,a*xx+b)
+% $$$ hold off
 TLScof=[a,b];
 TLSf = @(x) a + b*x;
 end

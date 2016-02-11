@@ -20,60 +20,93 @@ y = xy(:,2);
 length(x)
 length(y)
 
-%Fit TLS
-
-[TLSf, TLScof] = TLS(x,y);
-TLSy = arrayfun(TLSf,x);
-[TLSr2, TLSrmse] = functionerror(y,TLSy);
-% Fit linear polynomial
-[polyf,polycof] = polyreg(x,y,1);
-polyy = arrayfun(polyf,x);
-[polyyr2, polyyrmse] = functionerror(y,polyy);
-% Fit degree 2 polynomial
-[polyf2,polycof2] = polyreg(x,y,2);
-polyy2 = arrayfun(polyf2,x);
-[polyy2r2, polyy2rmse] = functionerror(y,polyy2);
-% Fit degree 45 polynomial
-[polyfn,polycof3] = polyreg(x,y,45);
-polyyn = arrayfun(polyfn,x);
-[polyynr2, polyynrmse] = functionerror(y,polyyn);
-
-
-fprintf('R squared Coefficient: \n')
-fprintf('TLS: %f , Polyn1: %f , Polyn2: %f, polyn45: %f, \n', TLSr2, polyyr2, polyy2r2,polyynr2)
-fprintf('Root mean square: \n')
-fprintf('TLS: %f , Polyn1: %f , Polyn2: %f, polyn45: %f, \n', TLSrmse, polyyrmse, polyy2rmse,polyynrmse)
-
-plot(x,y,'ro')
-hold on
-plot(x,polyy,'b')
-hold on
-plot(x,polyyn,'k')
-hold on
-plot(x,TLSy,'y')
-hold on
-legend('data','polynomial n=1','polynomial n=45','TLS')
-%set jump lengths to be 10%, 20% and 30%
-
-
-jumplengths = [floor(length(x)/10),floor(2*length(x)/10),floor(3*length(x)/10)]
-colors = ['m','k','b']
-for i=1:length(jumplengths)
-    plotCubicSpline(x,y,jumplengths(i),colors(i))
-    legendStr = sprintf('jump: %d',i)    
+if(nargin >= 3)
+    %Possible configuration options
+    configcell  = strsplit(configuration,',')
+    colors = {'m','b','r','c'}
+    %colors = {'m','b'}
+    strings = {'data'}
+    hold off
+    plot(x,y,'rx')
     hold on
+    for i=1:length(configcell)
+        configs = char(configcell(i))
+        if(findstr(configs,'poly_') == 1)
+            n = str2num(configs(6:end))
+            [polynf,polycof] = polyreg(x,y,n);
+            polyyn = arrayfun(polynf,x);
+            [polyynr, polyynrmse] = functionerror(y,polyyn);
+            polystring = sprintf('Polynomial degree:%d',n)
+            strings{end+1} = polystring;
+            fprintf('R squared Coefficient: \n')
+            fprintf('%s, %f, \n', polystring, polyynr)
+            fprintf('Root mean square: \n')
+            fprintf('%s , %f \n', polystring, polyynrmse)            
+            plot(x,polyyn,colors{mod(i,length(colors)-1)+1})
+            hold on   
+        elseif(findstr(configs,'TLS') == 1)
+            [TLSf, TLScof] = TLS(x,y);
+            TLSy = arrayfun(TLSf,x);
+            [TLSr2, TLSrmse] = functionerror(y,TLSy);
+            tlsstring = 'TLS';
+            strings{end+1} = tlsstring;
+            fprintf('R squared Coefficient: \n')
+            fprintf('%s, %f, \n', tlsstring, TLSr2)
+            fprintf('Root mean square: \n')
+            fprintf('%s , %f \n', tlsstring, TLSrmse)            
+            plot(x,TLSy,colors{mod(i,length(colors)-1)+1})
+            hold on
+            
+        end
     end
+    char(strings)
+    legend(char(strings))
+%Fit TLS
+elseif(nargin == 2 || configuration=='')
+    [TLSf, TLScof] = TLS(x,y);
+    TLSy = arrayfun(TLSf,x);
+    [TLSr2, TLSrmse] = functionerror(y,TLSy);
+    % Fit linear polynomial
+    [polyf,polycof] = polyreg(x,y,1);
+    polyy = arrayfun(polyf,x);
+    [polyyr2, polyyrmse] = functionerror(y,polyy);
+    % Fit degree 2 polynomial
+    [polyf2,polycof2] = polyreg(x,y,2);
+    polyy2 = arrayfun(polyf2,x);
+    [polyy2r2, polyy2rmse] = functionerror(y,polyy2);
+    % Fit degree 45 polynomial
+    [polyfn,polycof3] = polyreg(x,y,45);
+    polyyn = arrayfun(polyfn,x);
+    [polyynr2, polyynrmse] = functionerror(y,polyyn);
 
-    %label jumps by number of data points jumped
-% $$$ jumps1 = sprintf('jump : %d',jumplengths(1))
-% $$$ jumps2 = sprintf('jump : %d',jumplengths(2))
-% $$$ jumps3 = sprintf('jump : %d',jumplengths(3))
-    
-%Label data points by title.
-jumps1 = 'jump :10%'
-jumps2 = 'jump :20%'
-jumps3 = 'jump :30%'
 
-legend('data','polynomial n=1','polynomial n=45','TLS',jumps1,jumps2,jumps3)
+    fprintf('R squared Coefficient: \n')
+    fprintf('TLS: %f , Polyn1: %f , Polyn2: %f, polyn45: %f, \n', TLSr2, polyyr2, polyy2r2,polyynr2)
+    fprintf('Root mean square: \n')
+    fprintf('TLS: %f , Polyn1: %f , Polyn2: %f, polyn45: %f, \n', TLSrmse, polyyrmse, polyy2rmse,polyynrmse)
+
+    plot(x,y,'ro')
+    hold on
+    plot(x,polyy,'b')
+    hold on
+    plot(x,polyyn,'k')
+    hold on
+    plot(x,TLSy,'y')
+    hold on
+    legend('data','polynomial n=1','polynomial n=45','TLS')
+    jumplengths = [floor(length(x)/10),floor(2*length(x)/10),floor(3*length(x)/10)]
+    colors = ['m','k','b']
+    for i=1:length(jumplengths)
+        plotCubicSpline(x,y,jumplengths(i),colors(i))
+        legendStr = sprintf('jump: %d',i)    
+        hold on
+    end
+    %Label data points by title.
+    jumps1 = 'jump :10%'
+    jumps2 = 'jump :20%'
+    jumps3 = 'jump :30%'
+
+    legend('data','polynomial n=1','polynomial n=45','TLS',jumps1,jumps2,jumps3)
+
 
 end
