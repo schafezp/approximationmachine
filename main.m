@@ -52,6 +52,14 @@ disp('length x')
 length(x)
 disp('length y') 
 length(y)
+
+plot(x,polyy,'b')
+hold on
+plot(x,polyyn,'m')
+hold on
+plot(x,TLSy,'m')
+hold on
+legend('data','polynomial n=1','polynomial n=45','TLS')
 jumplengths = [25,50,75]
 colors = ['m','k','b']
 for i=1:length(jumplengths)
@@ -59,18 +67,13 @@ for i=1:length(jumplengths)
     legendStr = sprintf('jump: %d',i)    
     hold on
     end
-plot(x,polyy,'b')
-hold on
-plot(x,polyyn,'m')
-hold on
-plot(x,TLSy,'m')
-hold on
+
 jumps1 = sprintf('jump : %d',jumplengths(1))
 jumps2 = sprintf('jump : %d',jumplengths(2))
 jumps3 = sprintf('jump : %d',jumplengths(3))
 
 
-legend('data',jumps1,jumps2,jumps3,'polynomial n=1','polynomial n=45','TLS')
+legend('data','polynomial n=1','polynomial n=45','TLS',jumps1,jumps2,jumps3)
 
 % $$$ legend('data','linear','TLS','polyn')
 
