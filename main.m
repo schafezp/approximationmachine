@@ -5,6 +5,12 @@
 %Professor: Dr. Graves
 
 function [results] = main(x,y, configuration,v)
+% x and y are two vectors of the same length
+% configuration is a string of parameters deliminated by commans.
+% for example to plot degree 2,4 poly and tls call the following:
+% main(x,y,'poly_2,poly_4,TLS')
+% v is an optional parameter of values to be evaluated and returned
+% by the some method.
 if(nargin <2)
     error('We require at least and x and y')
 end
