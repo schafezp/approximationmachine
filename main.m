@@ -44,15 +44,8 @@ fprintf('TLS: %f , Polyn1: %f , Polyn2: %f, polyn45: %f, \n', TLSr2, polyyr2, po
 fprintf('Root mean square: \n')
 fprintf('TLS: %f , Polyn1: %f , Polyn2: %f, polyn45: %f, \n', TLSrmse, polyyrmse, polyy2rmse,polyynrmse)
 
-
-% $$$ plot(x,y,'ro','DisplayName',['data','jump distance: 3','jump distance: 5','jump distance: 10'])
 plot(x,y,'ro')
 hold on
-disp('length x') 
-length(x)
-disp('length y') 
-length(y)
-
 plot(x,polyy,'b')
 hold on
 plot(x,polyyn,'m')
@@ -60,7 +53,8 @@ hold on
 plot(x,TLSy,'m')
 hold on
 legend('data','polynomial n=1','polynomial n=45','TLS')
-jumplengths = [25,50,75]
+
+jumplengths = [floor(length(x)/10),floor(2*length(x)/10),floor(3*length(x)/10)]
 colors = ['m','k','b']
 for i=1:length(jumplengths)
     plotCubicSpline(x,y,jumplengths(i),colors(i))
@@ -74,19 +68,5 @@ jumps3 = sprintf('jump : %d',jumplengths(3))
 
 
 legend('data','polynomial n=1','polynomial n=45','TLS',jumps1,jumps2,jumps3)
-
-% $$$ legend('data','linear','TLS','polyn')
-
-
-% $$$ plot(x,y,'ro',intx3,cubicy3,'b',intx5,cubicy5,'k', intx10,cubicy10, ...
-% $$$      'm')
-% $$$ legend('data','jump = 3','jump = 5','jump = 10')
-
-
-%plot(x,y,'x',x,TLSy,'r',x,polyy,'b',x,polyy2,'k',x,polyyn,'m')
-%legend('data','TLS linear','Polynomial Linear','Polynomial Degree 2 ','Polynomial Degree 45')
-%plot(x,y,'x',x,polyyn,'m')
-%legend('data','degree 45 polynomial')
-
 
 end
