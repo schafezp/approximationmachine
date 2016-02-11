@@ -11,7 +11,17 @@ end
 if(length(x) ~= length(y))
     error('x and y must have the same length')
 end
+%make data expected form
+x = reshape(x,[],1);
+y = reshape(y,[],1);
+xy = sortrows([x y],1);
+x = xy(:,1);
+y = xy(:,2);
+length(x)
+length(y)
+
 %Fit TLS
+
 [TLSf, TLScof] = TLS(x,y);
 TLSy = arrayfun(TLSf,x);
 [TLSr2, TLSrmse] = functionerror(y,TLSy);
@@ -38,19 +48,33 @@ fprintf('TLS: %f , Polyn1: %f , Polyn2: %f, polyn45: %f, \n', TLSrmse, polyyrmse
 % $$$ plot(x,y,'ro','DisplayName',['data','jump distance: 3','jump distance: 5','jump distance: 10'])
 plot(x,y,'ro')
 hold on
-plotCubicSpline(x,y,3,'b')
+disp('length x') 
+length(x)
+disp('length y') 
+length(y)
+jumplengths = [25,50,75]
+colors = ['m','k','b']
+for i=1:length(jumplengths)
+    plotCubicSpline(x,y,jumplengths(i),colors(i))
+    legendStr = sprintf('jump: %d',i)    
+    hold on
+    end
+plot(x,polyy,'b')
 hold on
-plotCubicSpline(x,y,5,'k')
+
+plot(x,polyyn,'m')
 hold on
-plotCubicSpline(x,y,10,'m')
+plot(x,TLSy,'m')
 hold on
-plot(x,polyy)
-hold on
-plot(x,polyyn,'r')
-hold on
-plot(x,TLSy,'mx')
-hold on
-legend('data','jump : 3','jump : 5','jump : 10','polynomial n=1','polynomial n=45','TLS')
+jumps1 = sprintf('jump : %d',jumplengths(1))
+jumps2 = sprintf('jump : %d',jumplengths(2))
+jumps3 = sprintf('jump : %d',jumplengths(3))
+
+
+legend('data',jumps1,jumps2,jumps3,'polynomial n=1, ''polynomial n=45','TLS')
+
+% $$$ legend('data','linear','TLS','polyn')
+
 
 % $$$ plot(x,y,'ro',intx3,cubicy3,'b',intx5,cubicy5,'k', intx10,cubicy10, ...
 % $$$      'm')
