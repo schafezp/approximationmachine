@@ -48,9 +48,9 @@ plot(x,y,'ro')
 hold on
 plot(x,polyy,'b')
 hold on
-plot(x,polyyn,'m')
+plot(x,polyyn,'k')
 hold on
-plot(x,TLSy,'m')
+plot(x,TLSy,'y')
 hold on
 legend('data','polynomial n=1','polynomial n=45','TLS')
 %set jump lengths to be 10%, 20% and 30%
