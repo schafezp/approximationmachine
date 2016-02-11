@@ -22,18 +22,26 @@ polyy2 = arrayfun(polyf2,x);
 polyyn = arrayfun(polyfn,x);
 [polyynr2, polyynrmse] = functionerror(y,polyyn);
 
-jump = 5;
-subx = x(1:jump:length(x))
+jump = 3;
+subx3 = x(1:jump:length(x))
 suby = y(1:jump:length(y))
+cubicy3 = cubicSpline(subx3,suby,subx3)
+jump = 5;
+subx5 = x(1:jump:length(x))
+suby = y(1:jump:length(y))
+cubicy5 = cubicSpline(subx5,suby,subx5)
+jump = 10;
+subx10 = x(1:jump:length(x))
+suby = y(1:jump:length(y))
+cubicy10 = cubicSpline(subx10,suby,subx10)
 
-cubicy = cubicSpline(subx,suby,subx)
-length(subx)
-length(cubicy)
 fprintf('R squared Coefficient: \n')
 fprintf('TLS: %f , Polyn1: %f , Polyn2: %f, polyn45: %f, \n', TLSr2, polyyr2, polyy2r2,polyynr2)
 fprintf('Root mean square: \n')
 fprintf('TLS: %f , Polyn1: %f , Polyn2: %f, polyn45: %f, \n', TLSrmse, polyyrmse, polyy2rmse,polyynrmse)
-plot(x,y,'ro',subx,cubicy,'b')
+%plot(x,y,'ro',subx,cubicy,'b')
+plot(x,y,'ro',subx3,cubicy3,'b',subx5,cubicy5,'k', subx10,cubicy10,'m')
+legend('data','jump = 3','jump = 5','jump = 10')
 
 
 %plot(x,y,'x',x,TLSy,'r',x,polyy,'b',x,polyy2,'k',x,polyyn,'m')
