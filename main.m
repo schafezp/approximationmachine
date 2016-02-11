@@ -53,6 +53,8 @@ hold on
 plot(x,TLSy,'m')
 hold on
 legend('data','polynomial n=1','polynomial n=45','TLS')
+%set jump lengths to be 10%, 20% and 30%
+
 
 jumplengths = [floor(length(x)/10),floor(2*length(x)/10),floor(3*length(x)/10)]
 colors = ['m','k','b']
@@ -62,10 +64,15 @@ for i=1:length(jumplengths)
     hold on
     end
 
-jumps1 = sprintf('jump : %d',jumplengths(1))
-jumps2 = sprintf('jump : %d',jumplengths(2))
-jumps3 = sprintf('jump : %d',jumplengths(3))
-
+    %label jumps by number of data points jumped
+% $$$ jumps1 = sprintf('jump : %d',jumplengths(1))
+% $$$ jumps2 = sprintf('jump : %d',jumplengths(2))
+% $$$ jumps3 = sprintf('jump : %d',jumplengths(3))
+    
+%Label data points by title.
+jumps1 = 'jump :10%'
+jumps2 = 'jump :20%'
+jumps3 = 'jump :30%'
 
 legend('data','polynomial n=1','polynomial n=45','TLS',jumps1,jumps2,jumps3)
 
