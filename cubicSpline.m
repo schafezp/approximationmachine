@@ -64,6 +64,7 @@ if(nargin<3)
         
         plot(xx,yy,'b')
     end
+    title('Cubic spline plot')
     hold off
 % if we get x,y,v
 elseif(nargin==3)    
@@ -82,7 +83,7 @@ elseif(nargin==3)
         fprintf('v values for itr: %d \n', itr)
         xxv = v(xxvIndexes)
         fprintf('xi values for itr: %d \n', itr)
-        xvi = repmat(x(itr),1,length(xxv))
+        xvi = repmat(x(itr),1,length(xxv))'
         fprintf('length xxv: %d length xvi %d \n', length(xxv), length(xvi))
         fprintf('y values for i: %d \n', itr)
         yv = s0(itr) + s1(itr)*(xxv-xvi) + ... 
