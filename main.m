@@ -22,13 +22,22 @@ polyy2 = arrayfun(polyf2,x);
 polyyn = arrayfun(polyfn,x);
 [polyynr2, polyynrmse] = functionerror(y,polyyn);
 
+jump = 5;
+subx = x(1:jump:length(x))
+suby = y(1:jump:length(y))
+
+cubicy = cubicSpline(subx,suby,subx)
+length(subx)
+length(cubicy)
 fprintf('R squared Coefficient: \n')
 fprintf('TLS: %f , Polyn1: %f , Polyn2: %f, polyn45: %f, \n', TLSr2, polyyr2, polyy2r2,polyynr2)
 fprintf('Root mean square: \n')
 fprintf('TLS: %f , Polyn1: %f , Polyn2: %f, polyn45: %f, \n', TLSrmse, polyyrmse, polyy2rmse,polyynrmse)
-%plot(x,y,'x',x,polyy,'b',x,TLSy,'r')
-plot(x,y,'x',x,TLSy,'r',x,polyy,'b',x,polyy2,'k',x,polyyn,'m')
-legend('data','TLS linear','Polynomial Linear','Polynomial Degree 2 ','Polynomial Degree 45')
+plot(x,y,'ro',subx,cubicy,'b')
+
+
+%plot(x,y,'x',x,TLSy,'r',x,polyy,'b',x,polyy2,'k',x,polyyn,'m')
+%legend('data','TLS linear','Polynomial Linear','Polynomial Degree 2 ','Polynomial Degree 45')
 %plot(x,y,'x',x,polyyn,'m')
 %legend('data','degree 45 polynomial')
 
