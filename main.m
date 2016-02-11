@@ -23,49 +23,52 @@ y = reshape(y,[],1);
 xy = sortrows([x y],1);
 x = xy(:,1);
 y = xy(:,2);
-length(x)
-length(y)
 
 if(nargin >= 3)
     %Possible configuration options
-    configcell  = strsplit(configuration,',')
-    colors = {'m','b','r','c'}
+    configcell  = strsplit(configuration,',');
+    colors = {'m','b','r','c'};
     %colors = {'m','b'}
-    strings = {'data'}
+    strings = {'data'};
     hold off
     plot(x,y,'rx')
     hold on
     for i=1:length(configcell)
-        configs = char(configcell(i))
+        configs = char(configcell(i));
         if(findstr(configs,'poly_') == 1)
-            n = str2num(configs(6:end))
+            n = str2num(configs(6:end));
             [polynf,polycof] = polyreg(x,y,n);
             polyyn = arrayfun(polynf,x);
             [polyynr, polyynrmse] = functionerror(y,polyyn);
-            polystring = sprintf('Polynomial degree:%d',n)
+            polystring = sprintf('Polynomial degree : %d ',n);
             strings{end+1} = polystring;
-            fprintf('R squared Coefficient: \n')
-            fprintf('%s, %f, \n', polystring, polyynr)
-            fprintf('Root mean square: \n')
-            fprintf('%s , %f \n', polystring, polyynrmse)            
-            plot(x,polyyn,colors{mod(i,length(colors)-1)+1})
+            fprintf('R squared Coefficient: \n');
+            fprintf('%s, %f, \n', polystring, polyynr);
+            fprintf('Root mean square: \n');
+            fprintf('%s , %f \n', polystring, polyynrmse);        
+            plot(x,polyyn,colors{mod(i,length(colors)-1)+1});
             hold on   
         elseif(findstr(configs,'TLS') == 1)
             [TLSf, TLScof] = TLS(x,y);
             TLSy = arrayfun(TLSf,x);
             [TLSr2, TLSrmse] = functionerror(y,TLSy);
-            tlsstring = 'TLS';
+            tlsstring = sprintf('TLS ');
             strings{end+1} = tlsstring;
-            fprintf('R squared Coefficient: \n')
-            fprintf('%s, %f, \n', tlsstring, TLSr2)
-            fprintf('Root mean square: \n')
-            fprintf('%s , %f \n', tlsstring, TLSrmse)            
-            plot(x,TLSy,colors{mod(i,length(colors)-1)+1})
-            hold on
-            
+            fprintf('R squared Coefficient: \n');
+            fprintf('%s, %f, \n', tlsstring, TLSr2);
+            fprintf('Root mean square: \n');
+            fprintf('%s , %f \n', tlsstring, TLSrmse);
+            plot(x,TLSy,colors{mod(i,length(colors)-1)+1});
+            hold on            
+        elseif(findstr(configs,'spline') == 1)
+            cubicy = cubicSpline(x,y,x);            
+            splinestring = sprintf('Spline');
+            strings{end+1} = splinestring;
+
+            plot(x,cubicy,colors{mod(i,length(colors)-1)+1});
+            hold on            
         end
     end
-    char(strings)
     legend(char(strings))
 %Fit TLS
 elseif(nargin == 2 || configuration=='')
