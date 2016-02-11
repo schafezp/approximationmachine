@@ -61,7 +61,6 @@ for i=1:length(jumplengths)
     end
 plot(x,polyy,'b')
 hold on
-
 plot(x,polyyn,'m')
 hold on
 plot(x,TLSy,'m')
@@ -71,7 +70,7 @@ jumps2 = sprintf('jump : %d',jumplengths(2))
 jumps3 = sprintf('jump : %d',jumplengths(3))
 
 
-legend('data',jumps1,jumps2,jumps3,'polynomial n=1, ''polynomial n=45','TLS')
+legend('data',jumps1,jumps2,jumps3,'polynomial n=1','polynomial n=45','TLS')
 
 % $$$ legend('data','linear','TLS','polyn')
 
