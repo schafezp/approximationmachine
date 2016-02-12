@@ -122,7 +122,7 @@ if(nargin >= 3 && ~strcmp(configuration,''))
     strings{end+1} = 'data';
     plot(x,y,'rx')
     hold on
-    legend(char(strings))
+    legend(char(strings),'location','northeastoutside')
 %Fit TLS
 elseif(nargin == 2 || strcmp(configuration,''))    
     
