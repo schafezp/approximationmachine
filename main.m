@@ -114,7 +114,7 @@ if(nargin >= 3 && ~strcmp(configuration,''))
             splinestring = sprintf('Spline');
             strings{end+1} = splinestring; 
             if(nargin == 4)                
-                cubicv = cubicspline(x,y,v)
+                cubicv = cubicSpline(x,y,v);
                 results = [results  cubicv];
             end
             plot(x,cubicy,colors{mod(i,length(colors)-1)+1});
@@ -125,6 +125,8 @@ if(nargin >= 3 && ~strcmp(configuration,''))
             expstring  = sprintf('Exponential ');
             [expr, exprmse] = functionerror(y,expy);
             printerror(expr,exprmse,expstring)
+            fprintf('y =  c * exp(k*x) -> [c k] \n')
+            fprintf(mat2str(coeff))
             strings{end+1} = expstring;
             if(nargin == 4)                
                 results = [results  arrayfun(expFunc,v)];
