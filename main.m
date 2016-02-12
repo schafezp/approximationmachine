@@ -27,8 +27,8 @@ if(length(x) ~= length(y))
     error('x and y must have the same length')
 end
 
-results = [];
-if(nargin == 4)    
+if(nargin == 4)
+    results = [];
     v = reshape(v,[],1);
 end
 %Set up default display values
@@ -41,6 +41,8 @@ y = reshape(y,[],1);
 xy = sortrows([x y],1);
 x = xy(:,1);
 y = xy(:,2);
+%create an empty array
+results=[];
 %must have over 3 arguments and the configuration string must not
 %be empty
 if(nargin >= 3 && ~strcmp(configuration,''))
@@ -89,7 +91,9 @@ if(nargin >= 3 && ~strcmp(configuration,''))
 
             printerror(polyynr,polyynrmse,polystring)
             printcoefficients(polycof);
-            
+            if(length(configcell)==1)
+                results = polycof;
+            end
             if(nargin == 4)
                 results = [results  arrayfun(polynf,v)];
             end
@@ -103,6 +107,9 @@ if(nargin >= 3 && ~strcmp(configuration,''))
             strings{end+1} = tlsstring;
             printerror(TLSr2,TLSrmse,tlsstring)
             printcoefficients(TLScof)
+            if(length(configcell)==1)
+                results = TLScof;
+            end
             if(nargin == 4)
                 results = [results  arrayfun(TLSf,v)];
             end
@@ -128,6 +135,9 @@ if(nargin >= 3 && ~strcmp(configuration,''))
             fprintf('y =  c * exp(k*x) -> [c k] \n')
             fprintf(mat2str(coeff))
             strings{end+1} = expstring;
+            if(length(configcell)==1)
+                results = coeff;
+            end
             if(nargin == 4)                
                 results = [results  arrayfun(expFunc,v)];
             end
