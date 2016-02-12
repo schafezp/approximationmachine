@@ -95,7 +95,7 @@ if(nargin >= 3 && ~strcmp(configuration,''))
             tlsstring = sprintf('TLS');
             strings{end+1} = tlsstring;
             printerror(TLSr2,TLSrmse,tlsstring)
-            fprintf('TLS coefficients: %f + %f x \n',TLScof(1),TLScof(2));
+            printcoefficients(TLScof)
             plot(x,TLSy,colors{mod(i,length(colors)-1)+1});
             hold on            
         elseif(doesMatchSpline)
@@ -157,7 +157,7 @@ elseif(nargin == 2 || strcmp(configuration,''))
     legendStrings{end+1} = 'TLS';
     tlsstring = legendStrings{end};
     printerror(TLSr2,TLSrmse,tlsstring)
-    fprintf('TLS coefficients: %f + %f x \n',TLScof(1),TLScof(2));
+    printcoefficients(TLScof)
     
     itr = itr +1;
     legendStrings{end+1} = 'Spline';

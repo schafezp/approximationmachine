@@ -33,7 +33,7 @@ a=-(QM(1,2)*b-QM(1,3))/QM(1,1);
 % $$$ plot(A,B,'x')
 % $$$ plot(xx,a*xx+b)
 % $$$ hold off
-TLScof=[a,b];
+TLScof=[b,a];
 TLSf = @(x) a + b*x;
 end
 

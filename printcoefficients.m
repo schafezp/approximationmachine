@@ -1,5 +1,5 @@
 function [] = printcoefficients(polycof)
-fprintf('Polynomial coefficients: a + bx + cx^2 + ... \n');
+fprintf('Polynomial coefficients: a + bx  + ... \n');
 fprintf([mat2str(polycof,5) '\n'])
 % $$$ fprintf('Polynomial coefficients: a + bx + cx^2 + ... \n[');
 % $$$ for cof=length(polycof):-1:1
