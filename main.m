@@ -27,10 +27,8 @@ if(length(x) ~= length(y))
     error('x and y must have the same length')
 end
 
-%If plot was open before, close it.
-clf('reset')
 %Set up default display values
-displayPolyCof = [1,2,45];
+displayPolyCof = [1,2,10];
 
 colors = {'m','b','r','c'};
 %make data expected form
@@ -84,7 +82,10 @@ if(nargin >= 3 && ~strcmp(configuration,''))
             [polyynr, polyynrmse] = functionerror(y,polyyn);
             polystring = sprintf('Polynomial degree : %d ',n);
             strings{end+1} = polystring;
+
             printerror(polyynr,polyynrmse,polystring)
+            printcoefficients(polycof);
+            
             plot(x,polyyn,colors{mod(i,length(colors)-1)+1});
             hold on   
         elseif(doesMatchTLS)
@@ -94,6 +95,7 @@ if(nargin >= 3 && ~strcmp(configuration,''))
             tlsstring = sprintf('TLS');
             strings{end+1} = tlsstring;
             printerror(TLSr2,TLSrmse,tlsstring)
+            fprintf('TLS coefficients: %f + %f x \n',TLScof(1),TLScof(2));
             plot(x,TLSy,colors{mod(i,length(colors)-1)+1});
             hold on            
         elseif(doesMatchSpline)
@@ -126,16 +128,23 @@ elseif(nargin == 2 || strcmp(configuration,''))
     
     plot(x,y,'ro')
     hold on
-    legendStrings = {'data'}
-    itr = 1
+    legendStrings = {'data'};
+    itr = 1;
     for i=1:length(displayPolyCof)
         
         [polyf,polycof] = polyreg(x,y,displayPolyCof(i));
         polyy = arrayfun(polyf,x);
         [polyyr2, polyyrmse] = functionerror(y,polyy);
-        polystring = sprintf('Polynomial : %d ',displayPolyCof(i));
+        
+        
+        
+        
+        polystring = sprintf(' Polynomial : %d ',displayPolyCof(i));
         legendStrings{end+1} = polystring;
+        %print error
         printerror(polyyr2,polyyrmse,polystring)
+        % run function to print coefficients
+        printcoefficients(polycof)
         plot(x,polyy,colors{mod(i,length(colors)-1)+1})
         hold on
         
@@ -146,6 +155,9 @@ elseif(nargin == 2 || strcmp(configuration,''))
     [TLSr2, TLSrmse] = functionerror(y,TLSy);
     plot(x,TLSy,colors{mod(itr,length(colors)-1)+1})
     legendStrings{end+1} = 'TLS';
+    tlsstring = legendStrings{end};
+    printerror(TLSr2,TLSrmse,tlsstring)
+    fprintf('TLS coefficients: %f + %f x \n',TLScof(1),TLScof(2));
     
     itr = itr +1;
     legendStrings{end+1} = 'Spline';
