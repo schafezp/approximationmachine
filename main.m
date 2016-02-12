@@ -81,22 +81,16 @@ if(nargin >= 3 && ~strcmp(configuration,''))
             [polyynr, polyynrmse] = functionerror(y,polyyn);
             polystring = sprintf('Polynomial degree : %d ',n);
             strings{end+1} = polystring;
-            fprintf('R squared Coefficient: \n');
-            fprintf('%s, %f, \n', polystring, polyynr);
-            fprintf('Root mean square: \n');
-            fprintf('%s , %f \n', polystring, polyynrmse);        
+            printerror(polyynr,polyynrmse,polystring)
             plot(x,polyyn,colors{mod(i,length(colors)-1)+1});
             hold on   
         elseif(doesMatchTLS)
             [TLSf, TLScof] = TLS(x,y);
             TLSy = arrayfun(TLSf,x);
             [TLSr2, TLSrmse] = functionerror(y,TLSy);
-            tlsstring = sprintf('TLS ');
+            tlsstring = sprintf('TLS');
             strings{end+1} = tlsstring;
-            fprintf('R squared Coefficient: \n');
-            fprintf('%s, %f, \n', tlsstring, TLSr2);
-            fprintf('Root mean square: \n');
-            fprintf('%s , %f \n', tlsstring, TLSrmse);
+            printerror(TLSr2,TLSrmse,tlsstring)
             plot(x,TLSy,colors{mod(i,length(colors)-1)+1});
             hold on            
         elseif(doesMatchSpline)
@@ -111,10 +105,7 @@ if(nargin >= 3 && ~strcmp(configuration,''))
             expy = arrayfun(expFunc,x);
             expstring  = sprintf('Exponential ');
             [expr, exprmse] = functionerror(y,expy);
-            fprintf('R squared Coefficient: \n');
-            fprintf('%s, %f, \n', expstring, expr);
-            fprintf('Root mean square: \n');
-            fprintf('%s , %f \n', expstring, exprmse);        
+            printerror(expr,exprmse,expstring)
             strings{end+1} = expstring;
             plot(x,expy,colors{mod(i,length(colors)-1)+1});
             hold on

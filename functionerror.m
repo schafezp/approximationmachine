@@ -4,6 +4,6 @@ y = reshape(y,[],1);
 f = reshape(f,[],1);
 
 r2 = corr(y,f)^2;
-rmse  = sqrt(mean((y-f).^2))
+rmse  = sqrt(mean((y-f).^2));
 
 end
