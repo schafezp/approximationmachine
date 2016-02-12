@@ -27,8 +27,8 @@ if(length(x) ~= length(y))
     error('x and y must have the same length')
 end
 
-if(nargin == 4)
-    results = [];
+results = [];
+if(nargin == 4)    
     v = reshape(v,[],1);
 end
 %Set up default display values
