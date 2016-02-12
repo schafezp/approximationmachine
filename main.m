@@ -23,20 +23,41 @@ y = reshape(y,[],1);
 xy = sortrows([x y],1);
 x = xy(:,1);
 y = xy(:,2);
-
-if(nargin >= 3)
+%must have over 3 arguments and the configuration string must not
+%be empty
+if(nargin >= 3 && ~strcmp(configuration,''))
     %Possible configuration options
     configcell  = strsplit(configuration,',');
     colors = {'m','b','r','c'};
     %colors = {'m','b'}
-    strings = {'data'};
-    hold off
-    plot(x,y,'rx')
-    hold on
+    strings = {};    
     for i=1:length(configcell)
         configs = char(configcell(i));
-        if(findstr(configs,'poly_') == 1)
-            n = str2num(configs(6:end));
+        doesMatchPoly = isequal(findstr(configs,'poly_') , 1)
+        doesMatchLinear = isequal(findstr(configs,'linear') , 1)
+        doesMatchTLS = isequal(findstr(configs,'tls') , 1)
+        doesMatchSpline = isequal(findstr(configs,'spline') , 1)
+        
+        concatenated = (doesMatchPoly  || doesMatchLinear || doesMatchTLS ||  doesMatchSpline)
+        %we want to have just a single match
+        wordParsed  = isequal(1,concatenated)
+        
+        if(~wordParsed)
+            error(['Could not parse configuration string. Arguments ' ...
+                   'are case sensitive!'])
+        end
+        
+        if( doesMatchPoly || doesMatchLinear)
+            
+            if(doesMatchPoly)
+                n = str2num(configs(6:end));
+            elseif(doesMatchLinear)
+                n = 1;
+            else
+                error('How did I get here?')
+            end    
+            
+            
             [polynf,polycof] = polyreg(x,y,n);
             polyyn = arrayfun(polynf,x);
             [polyynr, polyynrmse] = functionerror(y,polyyn);
@@ -48,7 +69,7 @@ if(nargin >= 3)
             fprintf('%s , %f \n', polystring, polyynrmse);        
             plot(x,polyyn,colors{mod(i,length(colors)-1)+1});
             hold on   
-        elseif(findstr(configs,'TLS') == 1)
+        elseif(doesMatchTLS)
             [TLSf, TLScof] = TLS(x,y);
             TLSy = arrayfun(TLSf,x);
             [TLSr2, TLSrmse] = functionerror(y,TLSy);
@@ -60,18 +81,24 @@ if(nargin >= 3)
             fprintf('%s , %f \n', tlsstring, TLSrmse);
             plot(x,TLSy,colors{mod(i,length(colors)-1)+1});
             hold on            
-        elseif(findstr(configs,'spline') == 1)
+        elseif(doesMatchSpline)
             cubicy = cubicSpline(x,y,x);            
             splinestring = sprintf('Spline');
             strings{end+1} = splinestring;
 
             plot(x,cubicy,colors{mod(i,length(colors)-1)+1});
-            hold on            
+            hold on   
+        else
+           error('Match not found. Unexpected error')
         end
-    end
+        
+    end   
+    strings{end+1} = 'data';
+    plot(x,y,'rx')
+    hold on
     legend(char(strings))
 %Fit TLS
-elseif(nargin == 2 || configuration=='')
+elseif(nargin == 2 || strcmp(configuration,''))    
     [TLSf, TLScof] = TLS(x,y);
     TLSy = arrayfun(TLSf,x);
     [TLSr2, TLSrmse] = functionerror(y,TLSy);
@@ -103,19 +130,18 @@ elseif(nargin == 2 || configuration=='')
     plot(x,TLSy,'y')
     hold on
     legend('data','polynomial n=1','polynomial n=45','TLS')
-    jumplengths = [floor(length(x)/10),floor(2*length(x)/10),floor(3*length(x)/10)]
-    colors = ['m','k','b']
+    jumplengths = [floor(length(x)/10),floor(2*length(x)/10),floor(3*length(x)/10)];
+    colors = {'m','k','b'};
     for i=1:length(jumplengths)
-        plotCubicSpline(x,y,jumplengths(i),colors(i))
-        legendStr = sprintf('jump: %d',i)    
+        plotCubicSpline(x,y,jumplengths(i),colors{i});
+        legendStr = sprintf('jump: %d',i);
         hold on
     end
     %Label data points by title.
-    jumps1 = 'jump :10%'
-    jumps2 = 'jump :20%'
-    jumps3 = 'jump :30%'
+    jumps1 = 'jump :10%';
+    jumps2 = 'jump :20%';
+    jumps3 = 'jump :30%';
 
     legend('data','polynomial n=1','polynomial n=45','TLS',jumps1,jumps2,jumps3)
-
-
+end
 end
