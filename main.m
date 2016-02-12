@@ -11,12 +11,25 @@ function [results] = main(x,y, configuration,v)
 % main(x,y,'poly_2,poly_4,TLS')
 % v is an optional parameter of values to be evaluated and returned
 % by the some method.
+
+% Examples:
+% to plot linear, quadratic, and spline of data x and y do:
+% main(x,y,'linear,poly_2,spline')
+
+% to plot exponential enter configuration string 'exp'
+% main(x,y,'exp')
+
+
 if(nargin <2)
     error('We require at least and x and y')
 end
 if(length(x) ~= length(y))
     error('x and y must have the same length')
 end
+
+%If plot was open before, close it.
+clf('reset')
+
 %make data expected form
 x = reshape(x,[],1);
 y = reshape(y,[],1);
@@ -33,14 +46,15 @@ if(nargin >= 3 && ~strcmp(configuration,''))
     strings = {};    
     for i=1:length(configcell)
         configs = char(configcell(i));
-        doesMatchPoly = isequal(findstr(configs,'poly_') , 1)
-        doesMatchLinear = isequal(findstr(configs,'linear') , 1)
-        doesMatchTLS = isequal(findstr(configs,'tls') , 1)
-        doesMatchSpline = isequal(findstr(configs,'spline') , 1)
+        doesMatchPoly = isequal(findstr(configs,'poly_') , 1);
+        doesMatchLinear = isequal(findstr(configs,'linear') , 1);
+        doesMatchTLS = isequal(findstr(configs,'tls') , 1);
+        doesMatchSpline = isequal(findstr(configs,'spline') , 1);
+        doesMatchExp = isequal(findstr(configs,'exp') , 1);
         
-        concatenated = (doesMatchPoly  || doesMatchLinear || doesMatchTLS ||  doesMatchSpline)
+        concatenated = (doesMatchPoly  || doesMatchLinear || doesMatchTLS ||  doesMatchSpline||doesMatchExp);
         %we want to have just a single match
-        wordParsed  = isequal(1,concatenated)
+        wordParsed  = isequal(1,concatenated);
         
         if(~wordParsed)
             error(['Could not parse configuration string. Arguments ' ...
@@ -88,6 +102,18 @@ if(nargin >= 3 && ~strcmp(configuration,''))
 
             plot(x,cubicy,colors{mod(i,length(colors)-1)+1});
             hold on   
+        elseif(doesMatchExp)
+            [expFunc, coeff] = expfit(x,y);
+            expy = arrayfun(expFunc,x);
+            expstring  = sprintf('Exponential ');
+            [expr, exprmse] = functionerror(y,expy);
+            fprintf('R squared Coefficient: \n');
+            fprintf('%s, %f, \n', expstring, expr);
+            fprintf('Root mean square: \n');
+            fprintf('%s , %f \n', expstring, exprmse);        
+            strings{end+1} = expstring;
+            plot(x,expy,colors{mod(i,length(colors)-1)+1});
+            hold on
         else
            error('Match not found. Unexpected error')
         end
