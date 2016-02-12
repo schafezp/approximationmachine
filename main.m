@@ -9,6 +9,8 @@ function [results] = main(x,y, configuration,v)
 % configuration is a string of parameters deliminated by commans.
 % for example to plot degree 2,4 poly and tls call the following:
 % main(x,y,'poly_2,poly_4,TLS')
+% if only one fit is specified, the function returns an array of
+% coefficents, if more than one fit is specified it returns an empty set
 % v is an optional parameter of values to be evaluated and returned
 % by the some method.
 
@@ -91,7 +93,7 @@ if(nargin >= 3 && ~strcmp(configuration,''))
 
             printerror(polyynr,polyynrmse,polystring)
             printcoefficients(polycof);
-            if(length(configcell)==1)
+            if(length(configcell)==1 && nargin==3)
                 results = polycof;
             end
             if(nargin == 4)
@@ -107,7 +109,7 @@ if(nargin >= 3 && ~strcmp(configuration,''))
             strings{end+1} = tlsstring;
             printerror(TLSr2,TLSrmse,tlsstring)
             printcoefficients(TLScof)
-            if(length(configcell)==1)
+            if(length(configcell)==1 && nargin==3)
                 results = TLScof;
             end
             if(nargin == 4)
@@ -135,7 +137,7 @@ if(nargin >= 3 && ~strcmp(configuration,''))
             fprintf('y =  c * exp(k*x) -> [c k] \n')
             fprintf(mat2str(coeff))
             strings{end+1} = expstring;
-            if(length(configcell)==1)
+            if(length(configcell)==1&& nargin==3)
                 results = coeff;
             end
             if(nargin == 4)                
