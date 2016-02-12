@@ -3,6 +3,7 @@ function [r2, rmse] = functionerror(y,f)
 y = reshape(y,[],1);
 f = reshape(f,[],1);
 
+r2 = corr(y,f)^2;
+rmse  = sqrt(mean((y-f).^2))
 
-[r2, rmse] = rsquare(y,f);
 end

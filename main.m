@@ -46,32 +46,36 @@ if(nargin >= 3 && ~strcmp(configuration,''))
     strings = {};    
     for i=1:length(configcell)
         configs = char(configcell(i));
-        doesMatchPoly = isequal(findstr(configs,'poly_') , 1);
+        %These values will be 1 if the parameter is matched, and 0
+        %if it isn't.
+        doesMatchPoly = isequal(findstr(configs,'poly') , 1);
         doesMatchLinear = isequal(findstr(configs,'linear') , 1);
         doesMatchTLS = isequal(findstr(configs,'tls') , 1);
         doesMatchSpline = isequal(findstr(configs,'spline') , 1);
         doesMatchExp = isequal(findstr(configs,'exp') , 1);
-        
+        %If concatenated is 0, that means that we couldn't match
+        %the string.
         concatenated = (doesMatchPoly  || doesMatchLinear || doesMatchTLS ||  doesMatchSpline||doesMatchExp);
-        %we want to have just a single match
-        wordParsed  = isequal(1,concatenated);
         
+        %if word parsed is 0 then we did not find a match
+        wordParsed  = isequal(1,concatenated);
+        %if word parsed is 0 then we did not find a match
         if(~wordParsed)
             error(['Could not parse configuration string. Arguments ' ...
                    'are case sensitive!'])
         end
         
+        
         if( doesMatchPoly || doesMatchLinear)
             
             if(doesMatchPoly)
-                n = str2num(configs(6:end));
+                n = str2num(configs(5:end));
             elseif(doesMatchLinear)
                 n = 1;
             else
                 error('How did I get here?')
             end    
-            
-            
+
             [polynf,polycof] = polyreg(x,y,n);
             polyyn = arrayfun(polynf,x);
             [polyynr, polyynrmse] = functionerror(y,polyyn);
