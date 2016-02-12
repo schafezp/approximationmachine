@@ -27,6 +27,10 @@ if(length(x) ~= length(y))
     error('x and y must have the same length')
 end
 
+if(nargin == 4)
+    results = [];
+    v = reshape(v,[],1);
+end
 %Set up default display values
 displayPolyCof = [1,2,10];
 
@@ -86,6 +90,9 @@ if(nargin >= 3 && ~strcmp(configuration,''))
             printerror(polyynr,polyynrmse,polystring)
             printcoefficients(polycof);
             
+            if(nargin == 4)
+                results = [results  arrayfun(polynf,v)]
+            end
             plot(x,polyyn,colors{mod(i,length(colors)-1)+1});
             hold on   
         elseif(doesMatchTLS)
@@ -96,13 +103,20 @@ if(nargin >= 3 && ~strcmp(configuration,''))
             strings{end+1} = tlsstring;
             printerror(TLSr2,TLSrmse,tlsstring)
             printcoefficients(TLScof)
+            if(nargin == 4)
+                results = [results  arrayfun(TLSf,v)]
+            end
+            
             plot(x,TLSy,colors{mod(i,length(colors)-1)+1});
             hold on            
         elseif(doesMatchSpline)
             cubicy = cubicSpline(x,y,x);            
             splinestring = sprintf('Spline');
-            strings{end+1} = splinestring;
-
+            strings{end+1} = splinestring; 
+            if(nargin == 4)                
+                cubicv = cubicspline(x,y,v)
+                results = [results  cubicv]
+            end
             plot(x,cubicy,colors{mod(i,length(colors)-1)+1});
             hold on   
         elseif(doesMatchExp)
@@ -112,6 +126,10 @@ if(nargin >= 3 && ~strcmp(configuration,''))
             [expr, exprmse] = functionerror(y,expy);
             printerror(expr,exprmse,expstring)
             strings{end+1} = expstring;
+            if(nargin == 4)                
+               
+                results = [results  arrayfun(expFunc,v)]
+            end
             plot(x,expy,colors{mod(i,length(colors)-1)+1});
             hold on
         else
