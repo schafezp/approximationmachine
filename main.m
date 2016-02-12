@@ -91,7 +91,7 @@ if(nargin >= 3 && ~strcmp(configuration,''))
             printcoefficients(polycof);
             
             if(nargin == 4)
-                results = [results  arrayfun(polynf,v)]
+                results = [results  arrayfun(polynf,v)];
             end
             plot(x,polyyn,colors{mod(i,length(colors)-1)+1});
             hold on   
@@ -104,7 +104,7 @@ if(nargin >= 3 && ~strcmp(configuration,''))
             printerror(TLSr2,TLSrmse,tlsstring)
             printcoefficients(TLScof)
             if(nargin == 4)
-                results = [results  arrayfun(TLSf,v)]
+                results = [results  arrayfun(TLSf,v)];
             end
             
             plot(x,TLSy,colors{mod(i,length(colors)-1)+1});
@@ -115,7 +115,7 @@ if(nargin >= 3 && ~strcmp(configuration,''))
             strings{end+1} = splinestring; 
             if(nargin == 4)                
                 cubicv = cubicspline(x,y,v)
-                results = [results  cubicv]
+                results = [results  cubicv];
             end
             plot(x,cubicy,colors{mod(i,length(colors)-1)+1});
             hold on   
@@ -127,8 +127,7 @@ if(nargin >= 3 && ~strcmp(configuration,''))
             printerror(expr,exprmse,expstring)
             strings{end+1} = expstring;
             if(nargin == 4)                
-               
-                results = [results  arrayfun(expFunc,v)]
+                results = [results  arrayfun(expFunc,v)];
             end
             plot(x,expy,colors{mod(i,length(colors)-1)+1});
             hold on
