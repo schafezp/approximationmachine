@@ -22,7 +22,7 @@ u(1)=u(1)+sqm;
 u=u/sqrt(sqm*(1+sqm));
 QM=M-u*u'*M;
 MM=QM(2:m,2);
-[U,S,Vt]=SVD_Test([MM,QM(2:m,3)]);
+[U,S,Vt]=SVD([MM,QM(2:m,3)]);
 s=Vt(n+1,n+1);
 if s==0;
     error('TLS Solution DNE')
