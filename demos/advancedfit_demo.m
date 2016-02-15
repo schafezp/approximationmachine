@@ -9,7 +9,7 @@ subplot(2,1,1)
 main(x,y,'spline,poly9,poly12')
 title('Difficult Function: y = 1/(1+5*x^2) + tanh(x/2)')
 subplot(2,1,2)
-main(x,y,'linear,poly2,poly4,poly6,poly8,spline')
+main(x,y,'spline,linear,poly2,poly4,poly6,poly8')
 title('Difficult Function: y = 1/(1+5*x^2) + tanh(x/2)')
 %possible
 
