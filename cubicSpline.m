@@ -70,7 +70,6 @@ if(nargin<3)
 elseif(nargin==3)    
     xincr = -1;
     for itr=1:(n-1)
-% $$$         fprintf('v indexes for itr: %d \n', itr)
         %this assumes x incresaing
         if(x(itr+1) > x(itr))
             xincr = 1;
@@ -80,12 +79,8 @@ elseif(nargin==3)
             xincr = 0;
             xxvIndexes = find(v < x(itr) & v >= x(itr+1));
         end
-% $$$         fprintf('v values for itr: %d \n', itr)
         xxv = v(xxvIndexes);
-% $$$         fprintf('xi values for itr: %d \n', itr)
         xvi = repmat(x(itr),1,length(xxv))';
-% $$$         fprintf('length xxv: %d length xvi %d \n', length(xxv), length(xvi))
-% $$$         fprintf('y values for i: %d \n', itr)
         yv = s0(itr) + s1(itr)*(xxv-xvi) + ... 
              s2(itr)*(xxv-xvi).^2 + s3(itr)*(xxv - xvi).^3;
         z(xxvIndexes) = yv;
