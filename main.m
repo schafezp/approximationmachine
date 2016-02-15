@@ -126,7 +126,8 @@ if(nargin >= 3 && ~strcmp(configuration,''))
                 cubicv = cubicSpline(x,y,v);
                 results = [results  cubicv];
             end
-            plot(x,cubicy,colors{mod(i,length(colors)-1)+1});
+            %plot(x,cubicy,colors{mod(i,length(colors)-1)+1});
+            plotCubicSpline(x,cubicy,1,colors{mod(i,length(colors)-1)+1});
             hold on   
         elseif(doesMatchExp)
             [expFunc, coeff] = expfit(x,y);
