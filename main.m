@@ -36,7 +36,7 @@ end
 %Set up default display values
 displayPolyCof = [1,2,10];
 
-colors = {'m','b','r','c'};
+colors = {'m','b','c','g','k','r'};
 %make data expected form
 x = reshape(x,[],1);
 y = reshape(y,[],1);
@@ -194,7 +194,7 @@ elseif(nargin == 2 || strcmp(configuration,''))
     legendStrings{end+1} = 'Spline';
     plotCubicSpline(x,y,1,colors{mod(itr,length(colors)-1)+1});
     
-    legend(char(legendStrings));
+    legend(char(legendStrings),'location','northeastoutside');
     
 end
 end
