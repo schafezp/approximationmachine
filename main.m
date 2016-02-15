@@ -36,7 +36,8 @@ end
 %Set up default display values
 displayPolyCof = [1,2,10];
 
-colors = {'m','b','c','g','k','r'};
+%colors strats with the second indexed color... too lazy to fix :D
+colors = {'g','b','k','m','r','c'};
 %make data expected form
 x = reshape(x,[],1);
 y = reshape(y,[],1);
