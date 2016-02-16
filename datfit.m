@@ -37,7 +37,7 @@ end
 displayPolyCof = [1,2,10];
 
 %colors strats with the second indexed color... too lazy to fix :D
-colors = {'g','b','k','m','r','c'};
+colors = {'g','b','r','m','c'};
 dataplotcolor = {'kx'};
 %make data expected form
 x = reshape(x,[],1);
