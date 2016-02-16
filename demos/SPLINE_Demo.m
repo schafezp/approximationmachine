@@ -14,10 +14,10 @@ Screen=get(0,'Screensize');
 A=[1 2 3 6 5 9 4];
 B=[6 9 7 0 5 6 9];
 subplot(3,1,1)
-main(A,B,'linear')
+datfit(A,B,'linear')
 title('Ordinary Least Squares')
 subplot(3,1,2)
-main(A,B,'spline')
+datfit(A,B,'spline')
 title('Total Least Squares')
 
 

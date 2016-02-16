@@ -13,10 +13,10 @@ Screen=get(0,'Screensize');
 A=[1 2 3 6 3 2 5 9 4 5];
 B=[6 9 7 0 2 4 5 6 9 1];
 subplot(3,1,1)
-main(A,B,'linear')
+datfit(A,B,'linear')
 title('Ordinary Least Squares')
 subplot(3,1,2)
-main(A,B,'tls')
+datfit(A,B,'tls')
 title('Total Least Squares')
 
 %restore previous path

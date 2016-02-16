@@ -4,7 +4,7 @@
 %Class: MA373-01 winter quarter 2015-2016
 %Professor: Dr. Graves
 
-function [results] = main(x,y, configuration,v)
+function [results] = datfit(x,y, configuration,v)
 % x and y are two vectors of the same length
 % configuration is a string of parameters deliminated by commans.
 % for example to plot degree 2,4 poly and tls call the following:
@@ -38,6 +38,7 @@ displayPolyCof = [1,2,10];
 
 %colors strats with the second indexed color... too lazy to fix :D
 colors = {'g','b','k','m','r','c'};
+dataplotcolor = {'kx'};
 %make data expected form
 x = reshape(x,[],1);
 y = reshape(y,[],1);
@@ -153,13 +154,13 @@ if(nargin >= 3 && ~strcmp(configuration,''))
         
     end   
     strings{end+1} = 'data';
-    plot(x,y,'rx')
+    plot(x,y,dataplotcolor{1})
     hold on
     legend(char(strings),'location','northeastoutside')
 %Fit TLS
 elseif(nargin == 2 || strcmp(configuration,''))    
     
-    plot(x,y,'ro')
+    plot(x,y,dataplotcolor{1})
     hold on
     legendStrings = {'data'};
     itr = 1;
