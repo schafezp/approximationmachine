@@ -12,8 +12,12 @@ Bat_Ave = data(:,5);
 HR = data(:,8);
 ERA = data(:,17);
 %Call the main
+
+%Call with no parameters to get default plot
+datfit(hits,runs,'')
+
+ 
 title('Baseball data')
-datfit(hits,runs,'poly1,poly2,poly10,tls')
 xlabel('Hits made')
 ylabel('Runs made')
 
