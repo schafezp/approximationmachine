@@ -13,7 +13,7 @@ HR = data(:,8);
 ERA = data(:,17);
 %Call the main
 title('Baseball data')
-datfit(hits,runs)
+datfit(hits,runs,'poly1,poly2,poly10,tls')
 xlabel('Hits made')
 ylabel('Runs made')
 

@@ -2,10 +2,6 @@
 % %preferable to OLS, It is completely random I just was testing out the
 % %function.
 
-%This is a workaround to the pathing problem. This will temporarily
-%change the directory one level up, then restore it at the end.
-currentpath = cd('..');
-parentpath = pwd()
 
 
 close all
@@ -20,6 +16,3 @@ subplot(3,1,2)
 datfit(A,B,'spline')
 title('Spline fit')
 
-
-%restore previous path
-cd(currentpath);
