@@ -12,10 +12,10 @@ figure('Name','Data with an outlier')
 Screen=get(0,'Screensize');
 A=[1 2 3 6 3 2 5 9 4 5];
 B=[6 9 7 0 2 4 5 6 9 1];
-subplot(3,1,1)
+subplot(2,1,1)
 datfit(A,B,'linear')
 title('Ordinary Least Squares')
-subplot(3,1,2)
+subplot(2,1,2)
 datfit(A,B,'tls')
 title('Total Least Squares')
 

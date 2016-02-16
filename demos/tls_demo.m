@@ -7,19 +7,17 @@
 currentpath = cd('..');
 parentpath = pwd()
 
-
 close all
 figure('Name','Data with an outlier')
 Screen=get(0,'Screensize');
-A=[1 2 3 6 5 9 4];
-B=[6 9 7 0 5 6 9];
-subplot(3,1,1)
+A=[1 2 3 6 3 2 5 9 4 5];
+B=[6 9 7 0 2 4 5 6 9 1];
+subplot(2,1,1)
 datfit(A,B,'linear')
 title('Ordinary Least Squares')
-subplot(3,1,2)
-datfit(A,B,'spline')
+subplot(2,1,2)
+datfit(A,B,'tls')
 title('Total Least Squares')
-
 
 %restore previous path
 cd(currentpath);

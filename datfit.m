@@ -37,7 +37,7 @@ end
 displayPolyCof = [1,2,10];
 
 %colors strats with the second indexed color... too lazy to fix :D
-colors = {'g','b','r','m','c'};
+colors = {'g','b','r','c','m'};
 dataplotcolor = {'kx'};
 %make data expected form
 x = reshape(x,[],1);
@@ -146,7 +146,10 @@ if(nargin >= 3 && ~strcmp(configuration,''))
             if(nargin == 4)                
                 results = [results  arrayfun(expFunc,v)];
             end
-            plot(x,expy,colors{mod(i,length(colors)-1)+1});
+            inner_points = 25;
+            manyx = linspace(min(x),max(x),inner_points);
+            expy = arrayfun(expFunc,manyx);
+            plot(manyx,expy,colors{mod(i,length(colors)-1)+1});
             hold on
         else
            error('Match not found. Unexpected error')
@@ -169,10 +172,6 @@ elseif(nargin == 2 || strcmp(configuration,''))
         [polyf,polycof] = polyreg(x,y,displayPolyCof(i));
         polyy = arrayfun(polyf,x);
         [polyyr2, polyyrmse] = functionerror(y,polyy);
-        
-        
-        
-        
         polystring = sprintf(' Polynomial : %d ',displayPolyCof(i));
         legendStrings{end+1} = polystring;
         %print error
