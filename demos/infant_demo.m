@@ -16,7 +16,7 @@ ylabel('Infant deaths')
 
 %Call with no parameters to get default plot
 
-%datfit(year,dead,'')
+datfit(year,dead,'')
 
 %Call with parameters to get a specific plot.
 
@@ -25,7 +25,7 @@ ylabel('Infant deaths')
 %Call with optional vector to be evaluated
 
 yearsToEvalutesModels =  [1940,1950,1960,2000,2050];
-datfit(year,dead,'poly1,poly2,exp',yearsToEvalutesModels)
+%datfit(year,dead,'poly1,poly2,exp',yearsToEvalutesModels)
 
 %restore previous path
 cd(currentpath);
